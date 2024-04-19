@@ -58,9 +58,9 @@ class Termle:
             word = input(type + ":\n")
             
             if len(word) != self.L:
-                print(f"\nPlease try again. {type} length must be {self.L}.\n")
+                print(f"\n{type} length must be {self.L}. Please try again.\n")
             elif not word.isalpha():
-                print(f"\nPlease try again. {type} must only contain alphabets.\n")
+                print(f"\n{type} must only contain alphabets. Please try again.\n")
             else:
                 invalid = False
         return word.upper()
@@ -69,9 +69,8 @@ class Termle:
         return self.ask_word("Guess")
 
     def ask_answer(self):
-        a = ""
-        while a not in self.A:
-            a = self.ask_word("Answer")
+        while (a := self.ask_word("Answer")) not in self.A:
+            print("\nNot an accepted answer. Please try again.\n")
         return a            
     
     def ask_colour(self):
@@ -90,18 +89,20 @@ class Termle:
     def play_with(self, guesser, visual):
         self.reset()
         gues = []
+        
         while not self.is_solved():
             g = guesser()
             print(f"\nPlease use {g}.")
-
             col = self.ask_colour()
-
+            
             print()
             if self.update(g, col, visual):
                 gues.append((g, col))
             print()
-
-        gues.append((self.get_candidates()[0], "GGGGG"))
+        
+        if col != "GGGGG":
+            gues.append((self.get_candidates()[0], "GGGGG"))
+        
         self.reset()
         return gues
 
@@ -114,15 +115,19 @@ class Termle:
     def auto_guess(self, visual):
         self.reset()
         a = self.ask_answer()
-        col = Painter.colour(self.best, a)
-        gues = [(self.best, col)]
+        gues = []
         
         while not self.is_solved():
+            col = Painter.colour(self.best, a)
+            gues.append((self.best, col))
+            
             if visual:
                 print(f"\nTrying {self.best}, got colouring {col}.\n")
             
             self.update(self.best, col, visual)
-            col = Painter.colour(self.best, a)
-            gues.append((self.best, col))
 
+        if col != "GGGGG":
+            gues.append((a, "GGGGG"))
+        
+        self.reset()
         return gues
