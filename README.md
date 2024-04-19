@@ -38,6 +38,9 @@
 - no prints, maybe should make a growing .csv?
 - meant for GH Actions but idk how to do that yet
 
+**copy_header.py**
+- useful header file for the .exe files
+
 **exedle.py**
 - simple Wordle solver
 - can be made into an .exe
