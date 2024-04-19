@@ -3,7 +3,6 @@ import math
 from painter import Painter
 
 class Theorist:
-
     def __init__(self, L, C):
         for c in C:
             if len(c) != L:
@@ -12,6 +11,7 @@ class Theorist:
         self.painter = Painter(L)
         self.C = C
 
+    # (Painter) Getters
     def get_L(self):
         return self.painter.get_L()
 
@@ -21,10 +21,14 @@ class Theorist:
     def has_one_candidate(self):
         return len(self.C) == 1
 
+    def colour(self, g, a):
+        return self.painter.colour(g, a)
+    
+    # Entropy Calc
     def get_counts(self, g):
         counts = {}
         for a in self.C:
-            col = self.painter.colour(g, a)
+            col = self.colour(g, a)
             if col not in counts:
                 counts[col] = 0
             counts[col] += 1
@@ -41,13 +45,12 @@ class Theorist:
     def get_best_guess(self, G):
         if self.has_no_candidates():
             raise Exception("No candidates left.")
-
         if self.has_one_candidate():
             return self.C[0]
 
         best_g = None
         best_e = 0
-
+        
         for g in G:
             e = self.get_entropy(g)
             if e > best_e:
@@ -59,7 +62,6 @@ class Theorist:
     def show_best_guess(self, G):
         if self.has_no_candidates():
             raise Exception("No candidates left.")
-
         if self.has_one_candidate():
             print("Only one candidate left! " + self.C[0].upper())
             return self.C[0]
@@ -68,14 +70,15 @@ class Theorist:
         best_g = None
         best_e = 0
 
-        tiers = 4
-        perc = {int(len(G) * i / tiers) : int(i * 100 / tiers)
-                for i in range(1, tiers)}
+        #can be changed accordingly
+        TIERS = 4
+        perc = {int(len(G) * i / TIERS) : int(i * 100 / TIERS)
+                for i in range(1, TIERS)}
 
         for i in range(len(G)):
             if i in perc:
                 print(f"~{perc[i]}% done.")
-
+            
             g = G[i]
             e = self.get_entropy(g)
             if e > best_e:
@@ -86,6 +89,7 @@ class Theorist:
         print("Best guess: " + best_g.upper())
         return best_g
 
+    # Updating
     def filter_candidates(self, g, col):
         return tuple(filter(lambda a: self.painter.is_match(g, a, col.upper()), self.C))
 
@@ -93,5 +97,3 @@ class Theorist:
         new_C = self.filter_candidates(g, col)
         return Theorist(self.get_L(), new_C)
 
-    def colour(self, g, a):
-        return self.painter.colour(g, a)
