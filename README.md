@@ -1,16 +1,15 @@
-# shorthand:
-    L - word length
-    R - range(L), but tuple
+# Shorthand
+Symbol | Usage
+:---: | ---
+a / A | answer/all answers
+C | candidate answers
+col | colouring
+g / G | guess/all guesses
+'G' | green
+L | word length
+'R' | red (i.e. grey)
+'Y' | yellow
 
-    g - guess
-    a - answer
-    G - all guesses
-    A - all answers
-    C - candidate answers
-
-    'R' - red (i.e. grey)
-    'Y' - yellow
-    'G' - green
 
 # Logic Files
 
