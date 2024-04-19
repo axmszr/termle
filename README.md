@@ -42,10 +42,12 @@ L | word length
 
 **exedle.py**
 - simple Wordle solver
-- can be made into an .exe
+- copies to clipboard
+- can be made into an .exe (see Releases)
 - accepts colour and guess inputs from user
 
 **soaredle.py**
-- solves Wordle 'optimally', and copies to clipboard
-- can be made into an .exe
+- solves Wordle 'optimally'
+- copies to clipboard
+- can be made into an .exe (see Releases)
 - accepts single answer input from user
