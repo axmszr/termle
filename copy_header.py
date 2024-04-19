@@ -2,7 +2,7 @@ import pyperclip
 from logic.terminle import Termle
 from logic.law_school import Painter
 
-print("Please ensure 'possible_words.txt' and 'allowed_words.txt' are")
+print("\n    Please ensure 'possible_words.txt' and 'allowed_words.txt' are")
 print("    both in the '/words' folder, relative to this executable.\n")
 input("Press ENTER to continue.\n")
 
