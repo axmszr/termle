@@ -1,17 +1,15 @@
-from logic.terminle import Termle
-
-print("Please ensure 'possible_words.txt' and 'allowed_words.txt' are")
-print("  both in the '/words' folder, relative to this executable.\n")
-input("Press ENTER to continue.\n")
-
-L = 5
-ANSWERS_FILENAME = "words/possible_words.txt"
-GUESSES_FILENAME = "words/allowed_words.txt"
-
-termle = Termle(L, ANSWERS_FILENAME, GUESSES_FILENAME)
+from copy_header import *
 
 print("G for Green, Y for Yellow, R for Grey.\n")
 
-termle.play()
+gues = termle.play()
 
-input("Press ENTER to close.")
+print("==========\n")
+
+rows = [f"You took {len(gues)} tries:\n"]
+for g, col in gues:
+    rows.append(f"{Painter.emojify(col)}  :  {g}")
+
+copy_paste_rows(rows)
+
+input("Press ENTER to close.\n")
