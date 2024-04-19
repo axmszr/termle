@@ -1,9 +1,10 @@
-from cs3236 import Theorist
+from .cs3236 import Theorist
+from .law_school import Painter
 
 def check_file(L, filename):
     with open(filename) as file:
         full_str = file.read()
-        words = tuple(full_str.split('\n'))
+        words = tuple(w.upper() for w in full_str.split('\n'))
 
     for word in words:
         if len(word) != L:
@@ -19,13 +20,11 @@ class Termle:
     def __init__(self, L, answers_filename, guesses_filename):
         self.A = check_file(L, answers_filename)
         self.G = check_file(L, guesses_filename)
+        self.L = L
         self.theorist = Theorist(L, self.A)
         self.best = Termle.SOARE
 
     # (Theorist) Getters
-    def get_L(self):
-        return self.theorist.get_L()
-
     def is_solved(self):
         return self.theorist.has_one_candidate()
 
@@ -37,7 +36,7 @@ class Termle:
     
     # Interaction
     def reset(self):
-        self.theorist = Theorist(self.get_L(), self.A)
+        self.theorist = Theorist(self.L, self.A)
         self.best = Termle.SOARE
 
     def update(self, g, col, visual):
@@ -58,8 +57,8 @@ class Termle:
         while invalid:
             word = input(type + ":\n")
             
-            if len(word) != self.get_L():
-                print(f"\nPlease try again. {type} length must be {self.get_L()}.\n")
+            if len(word) != self.L:
+                print(f"\nPlease try again. {type} length must be {self.L}.\n")
             elif not word.isalpha():
                 print(f"\nPlease try again. {type} must only contain alphabets.\n")
             else:
@@ -70,7 +69,10 @@ class Termle:
         return self.ask_word("Guess")
 
     def ask_answer(self):
-        return self.ask_word("Answer")
+        a = ""
+        while a.upper() not in self.A:
+            a = self.ask_word("Answer")
+        return a            
     
     def ask_colour(self):
         invalid = True
@@ -78,8 +80,8 @@ class Termle:
             col = self.ask_word("Colouring")
 
             for c in col:
-                if c not in "rygRYG":
-                    print("\nPlease try again. Use: 'R' = grey, 'Y' = yellow, 'G' = green.\n")
+                if c not in "gyrGYR":
+                    print("\nPlease try again. Use: 'G' = green, 'Y' = yellow, 'R' = grey.\n")
                     break
             else:
                 invalid = False
@@ -97,7 +99,7 @@ class Termle:
             print()
         self.reset()
 
-    def run_opt(self):
+    def play_opt(self):
         self.reset()
         while not self.is_solved():
             print(f"Please use {self.best}.")
@@ -107,3 +109,19 @@ class Termle:
             self.update(self.best, col, True)
             print()
         self.reset()
+
+    def auto_guess(self, visual):
+        self.reset()
+        a = self.ask_answer()
+        col = Painter.colour(self.best, a)
+        gues = [(self.best, col)]
+        
+        while not self.is_solved():
+            if visual:
+                print(f"\nTrying {self.best}, got colouring {col}.\n")
+            
+            self.update(self.best, col, visual)
+            col = Painter.colour(self.best, a)
+            gues.append((self.best, col))
+
+        return gues

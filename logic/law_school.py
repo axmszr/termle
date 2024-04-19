@@ -4,29 +4,19 @@ class Painter:
     YLW = "Y"
     GRY = "R"
 
-    def __init__(self, L):
-        self.L = L
-        self.R = tuple(range(L))
+    def colour(g, a):
+        if len(g) != len(a):
+            raise Exception("Words not of same length: " + \
+                            f"{g} [{len(g)}] vs. {a} [{len(a)}]")
+        l = len(g)
+        new_g = g.upper()
+        new_a = a.upper()
 
-    def get_L(self):
-        return self.L
-
-    def check_word(self, word):
-        if len(word) != self.L:
-            raise Exception(f"Incorrect length of '{word}' (expected {L}).")
-        if not word.isalpha():
-            raise Exception(f"Invalid input: {word}.")
-        return word.lower()
-
-    def colour(self, g, a):
-        new_g = self.check_word(g)
-        new_a = self.check_word(a)
-
-        match = tuple(new_g[i] == new_a[i] for i in self.R)
-        remain = [new_a[i] for i in self.R if not match[i]]
+        match = tuple(new_g[i] == new_a[i] for i in range(l))
+        remain = [new_a[i] for i in range(l) if not match[i]]
 
         out = []
-        for i in self.R:
+        for i in range(l):
             if match[i]:
                 out.append(Painter.GRN)
             elif new_g[i] in remain:
@@ -37,5 +27,20 @@ class Painter:
 
         return ''.join(out)
 
-    def is_match(self, g, a, col):
-        return self.colour(g, a) == col
+    def is_match(g, a, col):
+        return Painter.colour(g, a) == col.upper()
+
+    def unicode(c):
+        match c:
+            case Painter.GRN:
+                return "\U0001F7E9"
+            case Painter.YLW:
+                return "\U0001F7E8"
+            case Painter.GRY:
+                return "\U00002B1C"
+            case _:
+                raise Exception(f"Invalid colour symbol: {c}.")
+
+    def emojify(col):
+        codes = [Painter.unicode(c) for c in col]
+        return ''.join(codes)

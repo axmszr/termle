@@ -1,34 +1,27 @@
 import math
-#from painter_OOP import Painter
-from law_school import Painter
+#from .painter_OOP import Painter
+from .law_school import Painter
 
 class Theorist:
     def __init__(self, L, C):
         for c in C:
             if len(c) != L:
                 raise Exception(f"Candidate {c} does not match length {L}.")
-
-        self.painter = Painter(L)
+        self.L = L
         self.C = C
 
     # (Painter) Getters
-    def get_L(self):
-        return self.painter.get_L()
-
     def has_no_candidates(self):
         return len(self.C) == 0
 
     def has_one_candidate(self):
         return len(self.C) == 1
-
-    def colour(self, g, a):
-        return self.painter.colour(g, a)
     
     # Entropy Calc
     def get_counts(self, g):
         counts = {}
         for a in self.C:
-            col = self.colour(g, a)
+            col = Painter.colour(g, a)
             if col not in counts:
                 counts[col] = 0
             counts[col] += 1
@@ -63,7 +56,7 @@ class Theorist:
         if self.has_no_candidates():
             raise Exception("No candidates left.")
         if self.has_one_candidate():
-            print("Only one candidate left! " + self.C[0].upper())
+            print(f"Only one candidate left! {self.C[0].upper()}")
             return self.C[0]
 
         print(f"{len(self.C)} remaining candidates. Calculating best guess...")
@@ -89,11 +82,10 @@ class Theorist:
         print("Best guess: " + best_g.upper())
         return best_g
 
-    # Updating
+    # Filtering candidates
     def filter_candidates(self, g, col):
-        return tuple(filter(lambda a: self.painter.is_match(g, a, col.upper()), self.C))
+        return tuple(filter(lambda a: Painter.is_match(g, a, col), self.C))
 
     def update(self, g, col):
         new_C = self.filter_candidates(g, col)
-        return Theorist(self.get_L(), new_C)
-
+        return Theorist(self.L, new_C)
