@@ -22,8 +22,7 @@
 - holds Painter class
 - handles Wordle colouring logic
 
-**law_school_OOP.py**
-- UNUSED
+**painter_OOP.py** (UNUSED)
 - holds Colour, Colouring, Painter classes
 - OOP version of law_school.py (possibly useful when considering other langs)
 
