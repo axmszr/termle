@@ -63,14 +63,14 @@ class Termle:
                 print(f"\nPlease try again. {type} must only contain alphabets.\n")
             else:
                 invalid = False
-        return word
+        return word.upper()
 
     def ask_guess(self):
         return self.ask_word("Guess")
 
     def ask_answer(self):
         a = ""
-        while a.upper() not in self.A:
+        while a not in self.A:
             a = self.ask_word("Answer")
         return a            
     
@@ -80,35 +80,36 @@ class Termle:
             col = self.ask_word("Colouring")
 
             for c in col:
-                if c not in "gyrGYR":
+                if c not in "GYR":
                     print("\nPlease try again. Use: 'G' = green, 'Y' = yellow, 'R' = grey.\n")
                     break
             else:
                 invalid = False
         return col
 
-    def play(self):
+    def play_with(self, guesser, visual):
         self.reset()
+        gues = []
         while not self.is_solved():
-            g = self.ask_guess()
-            print(f"\nOk! Please use {g.upper()}.")
+            g = guesser()
+            print(f"\nPlease use {g}.")
 
             col = self.ask_colour()
+
             print()
-            self.update(g, col, True)
+            if self.update(g, col, visual):
+                gues.append((g, col))
             print()
+
+        gues.append((self.get_candidates()[0], "GGGGG"))
         self.reset()
+        return gues
+
+    def play(self):
+        return self.play_with(self.ask_guess, True)
 
     def play_opt(self):
-        self.reset()
-        while not self.is_solved():
-            print(f"Please use {self.best}.")
-
-            col = self.ask_colour()
-            print()
-            self.update(self.best, col, True)
-            print()
-        self.reset()
+        return self.play_with(lambda : self.best, True)
 
     def auto_guess(self, visual):
         self.reset()
