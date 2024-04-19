@@ -1,6 +1,6 @@
 import math
 #from painter_OOP import Painter
-from painter import Painter
+from law_school import Painter
 
 class Theorist:
     def __init__(self, L, C):
