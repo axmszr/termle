@@ -1,4 +1,4 @@
-from termle import Termle
+from logic import terminle
 
 print("Please ensure possible_words.txt and allowed_words.txt")
 print("are in the same folder as this executable.\n")
