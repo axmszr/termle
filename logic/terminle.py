@@ -22,12 +22,20 @@ class Termle:
         self.theorist = Theorist(L, self.A)
         self.best = Termle.SOARE
 
+    # (Theorist) Getters
     def get_L(self):
         return self.theorist.get_L()
 
     def is_solved(self):
         return self.theorist.has_one_candidate()
 
+    def get_candidates(self):
+        return self.theorist.C
+
+    def eval(self, g):
+        return self.theorist.get_entropy(g)
+    
+    # Interaction
     def reset(self):
         self.theorist = Theorist(self.get_L(), self.A)
         self.best = Termle.SOARE
@@ -45,44 +53,42 @@ class Termle:
             print("No remaining candidates. Try again?")
             return False
 
-    def get_candidates(self):
-        return self.theorist.C
-
-    def eval(self, g):
-        return self.theorist.get_entropy(g)
-
-    def ask_word(self):
-        word = input("Your guess:\n")
-
-        if len(word) != self.get_L():
-            print(f"\nPlease try again. Length must be {self.get_L()}.\n")
-            return self.ask_word()
-
-        if not word.isalpha():
-            print("\nPlease try again. Word must only contain alphabets.\n")
-            return self.ask_word()
-
+    def ask_word(self, type):
+        invalid = True
+        while invalid:
+            word = input(type + ":\n")
+            
+            if len(word) != self.get_L():
+                print(f"\nPlease try again. {type} length must be {self.get_L()}.\n")
+            elif not word.isalpha():
+                print(f"\nPlease try again. {type} must only contain alphabets.\n")
+            else:
+                invalid = False
         return word
 
+    def ask_guess(self):
+        return self.ask_word("Guess")
+
+    def ask_answer(self):
+        return self.ask_word("Answer")
+    
     def ask_colour(self):
-        col = input("What's the colouring?\n")
+        invalid = True
+        while invalid:
+            col = self.ask_word("Colouring")
 
-        valid = False
-        if len(col) != self.get_L():
-            print(f"\nPlease try again. Length must be {self.get_L()}.\n")
-            return self.ask_colour()
-
-        for c in col:
-            if c not in "rygRYG":
-                print("\nPlease try again. Use: 'R' = grey, 'Y' = yellow, 'G' = green.\n")
-                return self.ask_colour()
-
+            for c in col:
+                if c not in "rygRYG":
+                    print("\nPlease try again. Use: 'R' = grey, 'Y' = yellow, 'G' = green.\n")
+                    break
+            else:
+                invalid = False
         return col
 
-    def run(self):
+    def play(self):
         self.reset()
         while not self.is_solved():
-            g = self.ask_word()
+            g = self.ask_guess()
             print(f"\nOk! Please use {g.upper()}.")
 
             col = self.ask_colour()
@@ -101,4 +107,3 @@ class Termle:
             self.update(self.best, col, True)
             print()
         self.reset()
-
