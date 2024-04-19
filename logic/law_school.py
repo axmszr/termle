@@ -7,7 +7,7 @@ class Painter:
     def __init__(self, L):
         self.L = L
         self.R = tuple(range(L))
-    
+
     def get_L(self):
         return self.L
 
@@ -16,7 +16,6 @@ class Painter:
             raise Exception(f"Incorrect length of '{word}' (expected {L}).")
         if not word.isalpha():
             raise Exception(f"Invalid input: {word}.")
-
         return word.lower()
 
     def colour(self, g, a):
