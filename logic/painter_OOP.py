@@ -1,6 +1,6 @@
 
-# OOP version of painter.py
-# slower, but hopefully clearer
+# unused OOP version of law_school.py
+# notably slower, but hopefully clearer
 
 class Colour:
 
