@@ -3,5 +3,6 @@ build/
 dist/
 *.spec
 *.exe
+*.zip
 
 **/__pycache__/
