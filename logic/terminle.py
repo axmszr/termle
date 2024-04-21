@@ -15,7 +15,7 @@ def check_file(L, filename):
 
 class Termle:
     # soare is the best first guess, assuming the full G and A
-    SOARE = "SOARE"
+    SOARE = "TARSE"
 
     def __init__(self, L, answers_filename, guesses_filename):
         self.A = check_file(L, answers_filename)
