@@ -1,16 +1,15 @@
-# shorthand:
-    L - word length
-    R - range(L), but tuple
+# Shorthand
+Symbol | Usage
+:---: | ---
+a / A | answer/all answers
+C | candidate answers
+col | colouring
+g / G | guess/all guesses
+'G' | green
+L | word length
+'R' | red (i.e. grey)
+'Y' | yellow
 
-    g - guess
-    a - answer
-    G - all guesses
-    A - all answers
-    C - candidate answers
-
-    'R' - red (i.e. grey)
-    'Y' - yellow
-    'G' - green
 
 # Logic Files
 
@@ -38,12 +37,17 @@
 - no prints, maybe should make a growing .csv?
 - meant for GH Actions but idk how to do that yet
 
+**copy_header.py**
+- useful header file for the .exe files
+
 **exedle.py**
 - simple Wordle solver
-- can be made into an .exe
+- copies to clipboard
+- can be made into an .exe (see Releases)
 - accepts colour and guess inputs from user
 
 **soaredle.py**
-- solves Wordle 'optimally', and copies to clipboard
-- can be made into an .exe
+- solves Wordle 'optimally'
+- copies to clipboard
+- can be made into an .exe (see Releases)
 - accepts single answer input from user
