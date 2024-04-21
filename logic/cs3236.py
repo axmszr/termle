@@ -59,7 +59,8 @@ class Theorist:
             print(f"Only one candidate left! {self.C[0].upper()}")
             return self.C[0]
 
-        print(f"{len(self.C)} remaining candidates. Calculating best guess...")
+        print(f"{len(self.C)} remaining candidates.")
+        print(f"Calculating best guess out of {len(G)}...")
         best_g = None
         best_e = 0
 
