@@ -1,6 +1,7 @@
 from copy_header import *
 
-print("G for Green, Y for Yellow, R for Grey.\n")
+print("G for Green, Y for Yellow, R for Grey.")
+print(f"The best starting word is {Termle.SOARE}.\n")
 
 gues = termle.play()
 
