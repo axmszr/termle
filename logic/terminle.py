@@ -8,7 +8,7 @@ def check_file(L, filename):
 
     for word in words:
         if len(word) != L:
-            raise Exception(f"Word '{a}' in {filename} does not match length {L}.")
+            raise Exception(f"Word '{word}' in {filename} does not match length {L}.")
 
     return words
 
