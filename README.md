@@ -27,6 +27,7 @@ L | word length
 
 **terminle.py**
 - holds Termle class
+- holds TermleGame class
 - main access point for files below
 
 
@@ -45,6 +46,12 @@ L | word length
 - copies to clipboard
 - can be made into an .exe (see Releases)
 - accepts colour and guess inputs from user
+
+**play_exedle.py**
+- Wordle game, with a hidden & random answer
+- copies to clipboard
+- can be made into an .exe (see Releases)
+- accepts guess inputs from user
 
 **soaredle.py**
 - solves Wordle 'optimally'
