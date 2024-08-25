@@ -107,8 +107,8 @@ class Termle:
         self.reset()
         return gues
 
-    def play(self):
-        return self.play_with(self.ask_guess, True)
+    def play(self, visual):
+        return self.play_with(self.ask_guess, visual)
 
     def play_opt(self):
         return self.play_with(lambda : self.best, True)
@@ -151,16 +151,17 @@ class TermleGame(Termle):
         while len(gues) < 6:
             g = guesser()
             col = Painter.colour(g, self.answer)
-
-            if col == "GGGGG":
-                gues.append((g, col))
-                break
-            
+            gues.append((g, col))
             print()
-            if self.update(g, col, visual):
-                gues.append((g, col))
+            
+            if col == "GGGGG":
+                break
 
-            print("\nCurrent state:")
+            if visual:
+                self.update(g, col, visual)
+                print()
+
+            print("Current state:")
             for g, col in gues:
                 print(f"    {g}\n    {col}\n")       
         
