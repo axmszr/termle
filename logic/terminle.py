@@ -147,6 +147,10 @@ class TermleGame(Termle):
     def play_with(self, guesser, visual):
         self.reset()
         gues = []
+        QWERTY = "QWERTYUIOP" +\
+                 "ASDFGHJKL" +\
+                 "ZXCVBNM"
+        remain = {q : q for q in QWERTY}
         
         while len(gues) < 6:
             g = guesser()
@@ -163,8 +167,18 @@ class TermleGame(Termle):
 
             print("Current state:")
             for g, col in gues:
-                print(f"    {g}\n    {col}\n")       
-        
+                print(f"    {g}\n    {col}\n")
+            
+            for i in range(self.L):
+                if col[i] == 'R':
+                    remain[g[i]] = '_'
+            rem = tuple(remain.values())
+            rem = (rem[:10], rem[10:19], rem[19:])
+            rem = tuple(' '.join(row) for row in rem)
+            
+            print("Remaining letters:")
+            print(f"  |{rem[0]}|\n  | {rem[1]} |\n  |  {rem[2]}    |\n")
+            
         self.reset()
         return gues
 
