@@ -1,5 +1,6 @@
 from .cs3236 import Theorist
 from .law_school import Painter
+from random import choice
 
 def check_file(L, filename):
     with open(filename) as file:
@@ -71,7 +72,7 @@ class Termle:
     def ask_answer(self):
         while (a := self.ask_word("Answer")) not in self.A:
             print("\nNot an accepted answer. Please try again.\n")
-        return a            
+        return a
     
     def ask_colour(self):
         invalid = True
@@ -115,6 +116,60 @@ class Termle:
     def auto_guess(self, visual):
         self.reset()
         a = self.ask_answer()
+        gues = []
+        
+        while not self.is_solved():
+            col = Painter.colour(self.best, a)
+            gues.append((self.best, col))
+            
+            if visual:
+                print(f"\nTrying {self.best}, got colouring {col}.\n")
+            
+            self.update(self.best, col, visual)
+
+        if col != "GGGGG":
+            gues.append((a, "GGGGG"))
+        
+        self.reset()
+        return gues
+
+
+class TermleGame(Termle):
+    def __init__(self, L, answers_filename, guesses_filename, *answer):
+        super().__init__(L, answers_filename, guesses_filename)
+        if answer:
+            if answer[0] not in self.A:
+                raise ValueError(f"{answer} is not an accepted answer.")
+            self.answer = answer[0]
+        else:
+            self.answer = choice(self.A)
+    
+    def play_with(self, guesser, visual):
+        self.reset()
+        gues = []
+        
+        while len(gues) < 6:
+            g = guesser()
+            col = Painter.colour(g, self.answer)
+
+            if col == "GGGGG":
+                gues.append((g, col))
+                break
+            
+            print()
+            if self.update(g, col, visual):
+                gues.append((g, col))
+
+            print("\nCurrent state:")
+            for g, col in gues:
+                print(f"    {g}\n    {col}\n")       
+        
+        self.reset()
+        return gues
+
+    def auto_guess(self, visual):
+        self.reset()
+        a = self.answer
         gues = []
         
         while not self.is_solved():
