@@ -2,10 +2,14 @@ from copy_header import *
 
 termle = TermleGame(L, ANSWERS_FILENAME, GUESSES_FILENAME)
 
-print("G for Green, Y for Yellow, R for Grey.")
-print(f"The best starting word is {Termle.SOARE}.\n")
+vis = input("Help from CS3236 - Information Theory? (Y/N)\n") in ('y', 'Y')
 
-gues = termle.play()
+print("\nG for Green, Y for Yellow, R for Grey.")
+
+if vis:
+    print(f"The best starting word is {Termle.SOARE}.\n")
+
+gues = termle.play(vis)
 
 print("==========\n")
 

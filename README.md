@@ -47,8 +47,9 @@ L | word length
 - can be made into an .exe (see Releases)
 - accepts colour and guess inputs from user
 
-**play_exedle.py**
+**playdle.py**
 - Wordle game, with a hidden & random answer
+- assistance option available
 - copies to clipboard
 - can be made into an .exe (see Releases)
 - accepts guess inputs from user
