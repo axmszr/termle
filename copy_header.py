@@ -1,5 +1,5 @@
 import pyperclip
-from logic.terminle import Termle
+from logic.terminle import Termle, TermleGame
 from logic.law_school import Painter
 
 print("\n    Please ensure 'possible_words.txt' and 'allowed_words.txt' are")
@@ -9,8 +9,6 @@ input("Press ENTER to continue.\n")
 L = 5
 ANSWERS_FILENAME = "words/possible_words.txt"
 GUESSES_FILENAME = "words/allowed_words.txt"
-
-termle = Termle(L, ANSWERS_FILENAME, GUESSES_FILENAME)
 
 print("==========\n")
 

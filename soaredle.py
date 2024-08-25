@@ -1,5 +1,7 @@
 from copy_header import *
 
+termle = Termle(L, ANSWERS_FILENAME, GUESSES_FILENAME)
+
 gues = termle.auto_guess(True)
 
 print("\n==========\n")

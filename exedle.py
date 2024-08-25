@@ -1,5 +1,7 @@
 from copy_header import *
 
+termle = Termle(L, ANSWERS_FILENAME, GUESSES_FILENAME)
+
 print("G for Green, Y for Yellow, R for Grey.")
 print(f"The best starting word is {Termle.SOARE}.\n")
 
