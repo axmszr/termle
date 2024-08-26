@@ -5,9 +5,9 @@ termle = TermleGame(L, ANSWERS_FILENAME, GUESSES_FILENAME)
 vis = input("Help from CS3236 - Information Theory? (Y/N)\n") in ('y', 'Y')
 
 print("\nG for Green, Y for Yellow, R for Grey.")
-
 if vis:
-    print(f"The best starting word is {Termle.SOARE}.\n")
+    print(f"The best starting word is {Termle.SOARE}.")
+print()
 
 gues = termle.play(vis)
 
